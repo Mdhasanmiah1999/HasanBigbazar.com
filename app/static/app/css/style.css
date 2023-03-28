@@ -1,3 +1,13 @@
+.carousel-inner > .item {
+    position: relative;
+    display: none;
+    -webkit-transition: 0.6s ease-in-out left;
+    -moz-transition: 0.6s ease-in-out left;
+    -o-transition: 0.6s ease-in-out left;
+    transition: 0.6s ease-in-out left;
+}
+
+
 .owl-carousel .item{
  /* border: 1px solid black; */
  font-size: 24px;

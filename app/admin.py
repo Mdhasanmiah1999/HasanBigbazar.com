@@ -1,6 +1,13 @@
 from django.contrib import admin
 
-from .models import Cart, Customer, OrderPlaced, Product
+# Register your models here.
+from .models import *
+
+
+
+from .models import Cart, Customer, OrderPlaced, Product, BuyOrder, Order 
+
+
 
 
 @admin.register(Customer)
@@ -14,9 +21,23 @@ class ProductModelAdmin(admin.ModelAdmin):
 @admin.register(Cart)
 class CartModelAdmin(admin.ModelAdmin):
     list_display = ['id','user','product','quantity']
+    
+@admin.register(BuyOrder)
+class CartModelAdmin(admin.ModelAdmin):
+    list_display = ['id','user','product','quantity']
 
 @admin.register(OrderPlaced)
 class OrderPlacedModelAdmin(admin.ModelAdmin):
     list_display = ['id','user','customer','product','quantity','order_date','status']
 
-# Register your models here.
+
+
+@admin.register(Order)
+class OrderModelAdmin(admin.ModelAdmin):
+    list_display = ['user', 'ordered','created', 'paymentId','orderId']
+    
+    
+
+admin.site.register(Transaction)
+admin.site.register(PaymentGatewaySettings)
+
