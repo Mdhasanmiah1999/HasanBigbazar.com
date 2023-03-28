@@ -2,7 +2,8 @@ from django import forms
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, UsernameField, PasswordChangeForm, password_validation, PasswordResetForm, SetPasswordForm 
 from django.contrib.auth.models import User
 from django.utils.translation import gettext, gettext_lazy as _
-from .models import Customer
+from .models import Customer, Order
+
 
 class CustomerRegistrationForm(UserCreationForm):
     password1 = forms.CharField(label='password', widget=forms.PasswordInput(attrs={'class':'form-control'}))
@@ -12,13 +13,17 @@ class Meta:
  model = User
  fields = ['username','email','password1','password2']
  labels = {'email': 'Email'}
- widget= {'username': forms.TextInput(attrs={'class':'form-control'})}
+ widget= {'username':forms.TextInput(attrs={'class':'form-control'})}
  
  
- 
- class LoginForm(AuthenticationForm ):
-     username = UsernameField(widget=forms.TextInput(attrs={'autofucus':True, 'class':'form-control'}))
-     password: forms.CharField(label=_("password"), strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'current-password','class':'form-control'}))
+class SignupForm(UserCreationForm):  
+    email = forms.EmailField(max_length=200, help_text='Required')  
+    class Meta:  
+        model = User  
+        fields = ('username', 'email', 'password1', 'password2')  
+class LoginForm(AuthenticationForm ):
+     usern = UsernameField(widget=forms.TextInput(attrs={'autofucus':True, 'class':'form-control'}))
+     password : forms.CharField(label=_("password"), strip=False, widget =forms.PasswordInput(attrs={'autocomplete':'current-password','class':'form-control'}))
 
 class MypasswordChangeForm(PasswordChangeForm):
     old_password: forms.CharField(label=_("Old Password"), strip=False, widget=forms.PasswordInput(attrs={'autocomplete':'current-password','autofocus':True, 'class':'form-control'}))
@@ -44,4 +49,8 @@ class CustomerProfileForm(forms.ModelForm):
         {'class': 'form-control'}), 'zipcode': forms.NumberInput(attrs=
         {'class':'form-control'})}                                                     
         
-    
+
+class PaymentMethodForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['payment_method', ]   

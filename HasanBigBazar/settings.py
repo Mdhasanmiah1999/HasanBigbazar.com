@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app',
+    'social_django',
 ]
 
 MIDDLEWARE = [
@@ -48,12 +49,38 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',
+    "django.middleware.security.SecurityMiddleware",
+    "django_permissions_policy.PermissionsPolicyMiddleware",
+    'social_django.middleware.SocialAuthExceptionMiddleware',
 ]
+
+
+PERMISSIONS_POLICY = {
+    "accelerometer": [],
+    "ambient-light-sensor": [],
+   "autoplay": "*",
+    "camera": [],
+    "display-capture": [],
+    "document-domain": [],
+    "encrypted-media": [],
+    "fullscreen": [],
+    "geolocation": [],
+    "gyroscope": [],
+    "interest-cohort": [],
+    "magnetometer": [],
+    "microphone": [],
+    "midi": [],
+    "payment": [],
+    "usb": [],
+}
+
 
 ROOT_URLCONF = 'HasanBigBazar.urls'
 
 TEMPLATES = [
     {
+        
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [],
         'APP_DIRS': True,
@@ -63,12 +90,24 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
             ],
         },
     },
 ]
 
 WSGI_APPLICATION = 'HasanBigBazar.wsgi.application'
+
+
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.google.GoogleOAuth2',
+    'django.contrib.auth.backends.ModelBackend'
+    #'social_core.backends.facebook.FacebookOAuth2',
+    #'social_core.backends.linkedin.LinkedinOAuth2',
+    #'social_core.backends.instagram.InstagramOAuth2',
+    #'django.contrib.auth.backends.ModelBackend',
+]
 
 
 # Database
@@ -119,11 +158,29 @@ USE_TZ = True
 STATIC_URL = 'static/'
 MEDIA_URL = 'media/'
 MESIA_ROOT = BASE_DIR/'media'
-LOGIN_REDIRECT_URL = '/profile/'
+LOGIN_REDIRECT_URL = '/home/'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'login'
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '115313129025-38codje2o67fjg0sh4aqurm9i8akhma7.apps.googleusercontent.com'
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = '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'
+#SOCIAL_AUTH_FACEBOOK_KEY = '911747673309686'
+#SOCIAL_AUTH_FACEBOOK_SECRET = '6fd8cd614c7484510d1f7a63ecb7f332'
+
+
+
+#DEFAULT_FROM_EMAIL = 'noreply<no_reply@domain.com>'
+
+
+#SESSION_ENGINE = "django.cotrib.session.backends.db"
 
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SOCIAL_AUTH_GOOGLE_OAUTH2_AUTH_EXTRA_ARGUMENTS = {
+        'hd': 'hasan'
+    }

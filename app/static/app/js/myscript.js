@@ -21,3 +21,46 @@ $('#slider1, #slider2, #slider3').owlCarousel({
         }
     }
 })
+$('.plus-cart').click(function() {
+    var id = $(this).attr("pid").toString();
+    console.log(id)
+    var eml = this.parentNode.children[2]
+    $.ajax({ 
+        type: "GET",
+        url: "/plus-cart",
+        data: {
+            prod_id : id
+        },
+       success: function(data) {
+        console.log(data)
+        console.log("success")
+        eml.innerText = data.quantity
+        document.getElementById("toal_amount").innerText=data.total_amount
+       }
+
+    })
+     
+}
+)
+
+$('.minus-cart').click(function() {
+    var id = $(this).attr("pid").toString();
+    console.log(id)
+    var eml = this.parentNode.children[2]
+    $.ajax({ 
+        type: "GET",
+        url: "/minuscart",
+        data: {
+            prod_id: id
+        },
+       success: function(data) {
+        console.log(data)
+        console.log("success")
+        eml.innerText = data.quantity
+        document.getElementById("toal_amount").innerText=data.total_amount
+       }
+
+    })
+     
+}
+)
